@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "7.6.1",
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native-stack": "^6.9.26",
     "expo": "~50.0.14",
@@ -20,7 +21,8 @@
     "react-native-google-places-autocomplete": "^2.5.6",
     "react-native-maps": "1.10.0",
     "react-native-maps-directions": "^1.9.0",
-    "@react-native-community/datetimepicker": "7.6.1"
+    "react-native-modal-datetime-picker": "^17.1.0",
+    "react-native-ui-datepicker": "^2.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

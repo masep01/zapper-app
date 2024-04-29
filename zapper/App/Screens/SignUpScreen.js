@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button, ScrollView} from 'react-native';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const SignupScreen = () => {
   const [username, setUsername] = useState('');
@@ -9,22 +8,16 @@ const SignupScreen = () => {
   const [email, setEmail] = useState('');
   const [instagram, setInstagram] = useState('');
   const [twitter, setTwitter] = useState('');
-  const [birthDate, setBirthDate] = useState('');
+  const [age, setAge] = useState('');
 
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
 
   const handleSignUp = () => {
     // Aquí puedes implementar la lógica para autenticar al usuario
-    const dateObj = new Date(birthDate);
-    const dia = dateObj.getDate();
-    const mes = dateObj.getMonth() + 1;
-    const año = dateObj.getFullYear();
-    const newDate = `${dia}-${mes}-${año}`;
 
     console.log('Username:', username);
     console.log('Email:', email);
-    console.log('Birth Date:', newDate);
+    console.log('Age:', age);
     console.log('Instagram:', instagram);
     console.log('Twitter:', twitter);
     console.log('Password:', password);
@@ -35,14 +28,6 @@ const SignupScreen = () => {
 
     // Por ejemplo, puedes enviar estos datos a un backend
   };
-
-  const showDatePicker = () =>{
-    setDatePickerVisibility(true);
-  }
-
-  const hideDatePicker = () =>{
-    setDatePickerVisibility(false);
-  }
 
   return (
     <ScrollView contentContainerStyle={styles.ScrollViewContainer}>
@@ -60,9 +45,12 @@ const SignupScreen = () => {
           onChangeText={(text) => setUsername(text)}
           value={username}
         />
-        <TouchableOpacity style={styles.buttonBD} onPress={showDatePicker}>
-          <Text style={styles.buttonText}>Select Birth Date</Text> 
-        </TouchableOpacity>
+        <TextInput
+          style={styles.input}
+          placeholder="Age"
+          onChangeText={(text) => setAge(text)}
+          value={age}
+        />
         <TextInput
           style={styles.input}
           placeholder="Instagram"
@@ -74,12 +62,6 @@ const SignupScreen = () => {
           placeholder="Twitter"
           onChangeText={(text) => setTwitter(text)}
           value={twitter}
-        />
-        <DateTimePickerModal
-          isVisible={isDatePickerVisible}
-          mode='date'
-          onConfirm={(datePicked) => setBirthDate(datePicked)}
-          onCancel={hideDatePicker}
         />
         <TextInput
           style={styles.input}
@@ -133,13 +115,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     width: '80%',
-    alignItems: 'center',
-  },
-  buttonBD: {
-    backgroundColor: '#3378ed',
-    padding: 10,
-    borderRadius: 5,
-    width: '50%',
     alignItems: 'center',
   },
   buttonText: {

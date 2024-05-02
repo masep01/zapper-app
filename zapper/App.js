@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TabNavigation from './App/Navigation/TabNavigation';
+import LoginScreen from './App/Screens/LogInScreen';
 
 import * as Location from 'expo-location';
 import { UserLocationContext } from './App/Context/UserLocationContext';
+import SignupScreen from './App/Screens/SignUpScreen';
+
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [location, setLocation] = useState(null);
@@ -33,11 +39,13 @@ export default function App() {
   }
   return (
     <View style={styles.container}>
-      <UserLocationContext.Provider value={{location, setLocation}}>
-      <NavigationContainer>
-          <TabNavigation/>
-        </NavigationContainer>
-      </UserLocationContext.Provider>   
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName = "LogIn">
+            <Stack.Screen name = "LogIn" component = {LoginScreen}/>
+            <Stack.Screen name = "SignUp" component = {SignupScreen}/>
+            <Stack.Screen name = "TabNav" component = {TabNavigation}/>
+          </Stack.Navigator>
+        </NavigationContainer>  
     </View>
   );
 }

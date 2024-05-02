@@ -52,7 +52,6 @@ export async function register(
             url: `${baseURL}/register`,
             data,
         });
-
         return { username: response.data.user_name, error: false };
     } catch (error) {
         return { error: true };

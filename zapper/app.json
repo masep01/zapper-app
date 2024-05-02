@@ -29,7 +29,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff",
-        "package": "com.zapper.pti"
+        "package": "com.zapper.pti",
+        
       },
       "package": "com.zapper.pti"
     },

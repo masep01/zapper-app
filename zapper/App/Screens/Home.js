@@ -1,10 +1,22 @@
-import React from 'react';
-import MapView from 'react-native-maps';
+import React, { useContext, useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native';
 import GoogleMapsView from '../Components/Home/GoogleMapsView';
-import Header from '../Components/Home/Header';
+import { UserLocationContext } from '../Context/UserLocationContext'
+import {getUserInformation} from "../Utils/axios";
 
 export default function Home() {
+  const [placeList,setPlaceList]=useState([]);
+  const {location,setLocation}=useContext(UserLocationContext);
+  useEffect(()=>{
+    if(location)
+    {
+      GetNearBySearchPlace('restaurant');
+    }
+  },[location])
+
+  const GetNearBySearchPlace=(value)=>{
+    getUserInformation()
+  }
   return (
     <GoogleMapsView/>
   );

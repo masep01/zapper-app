@@ -36,18 +36,14 @@ export async function register(
     password: string,
     email: string,
     age: string,
-    instagram: string,
-    twitter: string,
 ):
     Promise<LoginOrRegisterResponse> {
     const hash = sha256(password);
     const data: RegisterBody = {
         username,
+        password: hash,
         user_mail: email,
         age,
-        password: hash,
-        instagram,
-        twitter,
     };
 
     try {

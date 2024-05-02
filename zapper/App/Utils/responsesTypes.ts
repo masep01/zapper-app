@@ -4,7 +4,7 @@ export interface LoginBody {
 }
 
 export interface LoginOrRegisterResponse {
-    readonly token?: string;
+    readonly username?: string;
     readonly error: boolean;
 }
 

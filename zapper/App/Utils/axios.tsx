@@ -10,7 +10,7 @@ import {
     BasicResponse,
 } from './responsesTypes';
 
-const baseURL = '';
+const baseURL = 'http://localhost:8080/api/';
 
 export async function login(username: string, password: string): Promise<LoginOrRegisterResponse> {
     const hash = sha256(password);
@@ -23,9 +23,9 @@ export async function login(username: string, password: string): Promise<LoginOr
         const response = await axios({
             method: 'post',
             url: `${baseURL}/login`,
-            data,
+            data: data,
         });
-        return { token: response.data.token, error: false };
+        return { username: response.data.username, error: false };
     } catch (error) {
         return { error: true };
     }
@@ -57,7 +57,7 @@ export async function register(
             data,
         });
 
-        return { token: response.data.user_name, error: false };
+        return { username: response.data.user_name, error: false };
     } catch (error) {
         return { error: true };
     }

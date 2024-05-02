@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button, ScrollView} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert} from 'react-native';
+import { register } from '../Utils/axios';
 
 const SignupScreen = () => {
   const [username, setUsername] = useState('');
@@ -10,18 +11,48 @@ const SignupScreen = () => {
   const [twitter, setTwitter] = useState('');
   const [age, setAge] = useState('');
 
+  const createTwoButtonAlert = (title,msg) =>
+  Alert.alert(title, msg, [
+    {
+      text: 'Cancel',
+      style: 'cancel',
+    },
+
+    { 
+      text: 'OK', 
+    }
+  ]);
+
 
 
   const handleSignUp = () => {
-    // Aquí puedes implementar la lógica para autenticar al usuario
-
+    if(password != conf_passwd){
+      createTwoButtonAlert('Wrong Password','The passwords provided are not the same');
+    }
+    else{
+      console.log('Start Register');
+      
+      register(username,password,email,age,instagram,twitter).then((response) => {
+        user_token = response.token;
+        console.log('QUE PUTAS PASA');
+        if(response.error){
+          console.log('He dado error');
+        }
+        else{
+          console.log('Succesful register');
+        }
+      });
+    }
+    //Solo para ir probando
     console.log('Username:', username);
     console.log('Email:', email);
     console.log('Age:', age);
     console.log('Instagram:', instagram);
     console.log('Twitter:', twitter);
     console.log('Password:', password);
-    console.log('Good PSWD', password == conf_passwd);
+    console.log('Password2:', conf_passwd);
+
+    
 
     
 

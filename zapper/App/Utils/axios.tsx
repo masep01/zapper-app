@@ -10,7 +10,7 @@ import {
     BasicResponse,
 } from './responsesTypes';
 
-const baseURL = '';
+const baseURL = 'http://localhost:8080/api/user';
 
 export async function login(username: string, password: string): Promise<LoginOrRegisterResponse> {
     const hash = sha256(password);
@@ -38,6 +38,7 @@ export async function register(
     age: string,
     instagram: string,
     twitter: string,
+    
 ):
     Promise<LoginOrRegisterResponse> {
     const hash = sha256(password);
@@ -56,9 +57,27 @@ export async function register(
             url: `${baseURL}/register`,
             data,
         });
-
         return { token: response.data.user_name, error: false };
     } catch (error) {
+        if (error.response) {
+
+            // The server responded with a status code outside the 2xx range
+      
+            console.log('Error response:', error.response);
+      
+          } else if (error.request) {
+      
+            // The request was made but no response was received
+      
+            console.log('Error request:', error.request);
+      
+          } else {
+      
+            // Something happened in setting up the request that triggered an error
+      
+            console.log('Error message:', error.message);
+      
+          } //borrar
         return { error: true };
     }
 }

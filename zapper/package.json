@@ -17,6 +17,9 @@
     "cors": "^2.8.5",
     "expo": "~50.0.14",
     "expo-dev-client": "~3.3.11",
+    "expo": "~50.0.14",
+    "expo-dev-client": "~3.3.11",
+    "expo-image-picker": "~14.7.1",
     "expo-location": "~16.5.5",
     "expo-secure-store": "^12.8.1",
     "expo-status-bar": "~1.11.1",
@@ -27,6 +30,7 @@
     "react-native-maps-directions": "^1.9.0",
     "react-native-modal-datetime-picker": "^17.1.0",
     "react-native-ui-datepicker": "^2.0.2",
+    "react-native-paper": "^5.12.3",
     "sha256": "^0.2.0",
     "typescript": "^5.3.0"
   },

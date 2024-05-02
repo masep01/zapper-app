@@ -21,13 +21,13 @@ export default function TabNavigation() {
                 <Ionicons name="home" color={color} size={size} />
             ),
         }}/>
-        <Tab.Screen name="Search" component={Search} 
+        {/*<Tab.Screen name="Search" component={Search}
         options={{
             tabBarLabel: 'Search',
             tabBarIcon: ({color, size}) => (
                 <AntDesign name="search1" color={color} size={size} />
             ),
-        }}/>
+        }}/> */}
         <Tab.Screen name="Profile" component={Profile} 
         options={{
             tabBarLabel: 'Profile',

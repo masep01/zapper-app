@@ -39,11 +39,10 @@ export async function register(
     age: string,
 ):
     Promise<LoginOrRegisterResponse> {
-    const hash = sha256(password);
     const data: RegisterBody = {
         username,
-        password: hash,
-        user_mail: email,
+        password,
+        email,
         age,
     };
 
@@ -53,9 +52,10 @@ export async function register(
             url: `${baseURL}/register`,
             data,
         });
-        return { username: response.data.user_name, error: false };
+        return { username: response.data.user_name, statusCode: response.status, error: false };
     } catch (error) {
-        return { error: true };
+        if (error.response) return { error: true, statusCode: error.response.status };
+        else return { error: true };
     }
 }
 

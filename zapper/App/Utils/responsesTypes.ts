@@ -11,11 +11,9 @@ export interface LoginOrRegisterResponse {
 
 export interface RegisterBody {
     username: string;
-    user_mail: string;
+    email: string;
     password: string;
     age: string;
-    instagram?: string | null;
-    twitter?: string | null;
 }
 
 export interface MyInformationResponse {

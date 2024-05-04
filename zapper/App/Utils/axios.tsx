@@ -10,10 +10,9 @@ import {
     BasicResponse,
 } from './responsesTypes';
 
-const baseURL = 'http://zubat.fib.upc.edu:32334/api';
+const baseURL = 'http://zubat.fib.upc.edu:32334/api'
 
 export async function login(userName: string, password: string): Promise<LoginOrRegisterResponse> {
-    //const hash = sha256(password);
     const data: LoginBody = {
         username: userName,
         password: password,

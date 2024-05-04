@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TabNavigation from './App/Navigation/TabNavigation';
 import LoginScreen from './App/Screens/LogInScreen';
+import Home from './App/Screens/Home';
 
 import * as Location from 'expo-location';
 import { UserLocationContext } from './App/Context/UserLocationContext';
@@ -41,6 +42,7 @@ export default function App() {
     <View style={styles.container}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName = "LogIn">
+            <Stack.Screen name = "Home" component = {Home}/>
             <Stack.Screen name = "LogIn" component = {LoginScreen}/>
             <Stack.Screen name = "SignUp" component = {SignupScreen}/>
             <Stack.Screen name = "TabNav" component = {TabNavigation}/>

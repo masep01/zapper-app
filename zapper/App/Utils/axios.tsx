@@ -10,7 +10,7 @@ import {
     BasicResponse,
 } from './responsesTypes';
 
-const baseURL = 'http://zubat.fib.upc.edu:32334/api'
+const baseURL = 'http://zubat.fib.upc.edu:32334/api';
 
 export async function login(userName: string, password: string): Promise<LoginOrRegisterResponse> {
     const data: LoginBody = {
@@ -24,9 +24,11 @@ export async function login(userName: string, password: string): Promise<LoginOr
             url: `${baseURL}/login`,
             data: data,
         });
-        return { username: response.data.username, error: false };
+        return { username: response.data.username, statusCode: response.status, error: false};
     } catch (error) {
-        return { error: true };
+        if (error.response) return { error: true, statusCode: error.response.status };
+        else return { error: true };
+    
     }
 }
 

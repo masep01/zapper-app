@@ -4,8 +4,9 @@ export interface LoginBody {
 }
 
 export interface LoginOrRegisterResponse {
-    readonly username?: string;
-    readonly error: boolean;
+    readonly username?: string
+    readonly statusCode?: number
+    readonly error: boolean
 }
 
 export interface RegisterBody {

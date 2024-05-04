@@ -1,5 +1,5 @@
 export interface LoginBody {
-    user_name: string;
+    username: string;
     password: string;
 }
 

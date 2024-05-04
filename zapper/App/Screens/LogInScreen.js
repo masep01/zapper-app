@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
+import {login} from "../Utils/axios";
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogIn = () => {
-    // Aquí puedes implementar la lógica para autenticar al usuario
     console.log('Username:', username);
     console.log('Password:', password);
-    // Por ejemplo, puedes enviar estos datos a un backend
+    login(username, password)
   };
 
   return (

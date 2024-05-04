@@ -1,15 +1,25 @@
 import React, {useState} from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import {login} from "../Utils/axios";
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigation = useNavigation();
 
   const handleLogIn = () => {
-    console.log('Username:', username);
-    console.log('Password:', password);
-    login(username, password)
+     try {
+      console.log('Username:', username);
+      console.log('Password:', password);
+      const response = login(username, password);
+      
+      if (response.status === 200) navigation.navigate('Home');
+      else console.error('Error al iniciar sesión:', response.data);
+      
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+    }
   };
 
   return (

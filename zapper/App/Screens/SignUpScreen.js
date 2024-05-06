@@ -34,7 +34,7 @@ const SignupScreen = ({ navigation }) => {
       
       register(username,password,email,age,instagram,twitter).then((response) => {
         if (response.statusCode === 200) {
-          navigation.navigate('LogIn');
+          navigation.goBack();
           console.log('User: ' + username + ' successfully registered!');
         }
         else console.error('Error al registrar:', response.error);
@@ -51,30 +51,35 @@ const SignupScreen = ({ navigation }) => {
           placeholder="Email"
           onChangeText={(text) => setEmail(text)}
           value={email}
+          autoCapitalize='none'
         />
         <TextInput
           style={styles.input}
           placeholder="Username"
           onChangeText={(text) => setUsername(text)}
           value={username}
+          autoCapitalize='none'
         />
         <TextInput
           style={styles.input}
           placeholder="Age"
           onChangeText={(text) => setAge(text)}
           value={age}
+          autoCapitalize='none'
         />
         <TextInput
           style={styles.input}
           placeholder="Instagram"
           onChangeText={(text) => setInstagram(text)}
           value={instagram}
+          autoCapitalize='none'
         />
         <TextInput
           style={styles.input}
           placeholder="Twitter"
           onChangeText={(text) => setTwitter(text)}
           value={twitter}
+          autoCapitalize='none'
         />
         <TextInput
           style={styles.input}
@@ -82,6 +87,7 @@ const SignupScreen = ({ navigation }) => {
           onChangeText={(text) => setPassword(text)}
           value={password}
           secureTextEntry
+          autoCapitalize='none'
         />
         <TextInput
           style={styles.input}
@@ -89,6 +95,7 @@ const SignupScreen = ({ navigation }) => {
           onChangeText={(text) => setConfPassword(text)}
           value={conf_passwd}
           secureTextEntry
+          autoCapitalize='none'
         />
         <TouchableOpacity style={styles.button} onPress={handleSignUp}>
           <Text style={styles.buttonText}>Sign Up</Text>

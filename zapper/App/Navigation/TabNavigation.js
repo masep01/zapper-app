@@ -14,20 +14,20 @@ export default function TabNavigation() {
     <Tab.Navigator screenOptions={{
         headerShown: false,
     }}>
-        <Tab.Screen name="Home" component={Home} 
+        {/*<Tab.Screen name="Home" component={Home}
         options={{
             tabBarLabel: 'Home',
             tabBarIcon: ({color, size}) => (
                 <Ionicons name="home" color={color} size={size} />
             ),
-        }}/>
-        {/*<Tab.Screen name="Search" component={Search}
+        }}/>*/}
+        <Tab.Screen name="Search" component={Search}
         options={{
             tabBarLabel: 'Search',
             tabBarIcon: ({color, size}) => (
                 <AntDesign name="search1" color={color} size={size} />
             ),
-        }}/> */}
+        }}/> 
         <Tab.Screen name="Profile" component={Profile} 
         options={{
             tabBarLabel: 'Profile',

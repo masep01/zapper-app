@@ -2,13 +2,15 @@ import React, {useState} from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 import {login} from "../Utils/axios";
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation, setLoggedIn }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogIn = async () => {
     console.log('Username:', username);
     console.log('Password:', password);
+
+    setLoggedIn(true);
     try {
       const response = await login(username, password);
       console.log(response.statusCode);

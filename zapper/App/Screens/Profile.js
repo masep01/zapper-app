@@ -6,6 +6,7 @@ import color from "color";
 import {getUserInformation, updateUserInformation} from "../Utils/axios";
 import {getToken} from "../Utils/utils";
 
+
 const token = getToken();
 let username = '';
 let email = '';
@@ -21,7 +22,7 @@ getUserInformation(token).then((response) => {
     loadingScreen = false;
 });
 
-export default function Profile() {
+export default function Profile({ navigation }) {
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState(email);
     const [instagram, setInsta] = useState(instagram);
@@ -35,6 +36,7 @@ export default function Profile() {
             }
         });
     }
+
 
   return (
       <View style={styles.container}>
@@ -106,6 +108,7 @@ export default function Profile() {
               </View>
           </View>
       </View>
+      
   )
 }
 

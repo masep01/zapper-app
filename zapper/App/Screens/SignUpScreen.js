@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert} from 'react-native';
 import { register } from '../Utils/axios';
 
-const SignupScreen = () => {
+const SignupScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [conf_passwd, setConfPassword] = useState('');
@@ -10,6 +10,7 @@ const SignupScreen = () => {
   const [instagram, setInstagram] = useState('');
   const [twitter, setTwitter] = useState('');
   const [age, setAge] = useState('');
+  
 
   const createTwoButtonAlert = (title,msg) =>
   Alert.alert(title, msg, [
@@ -30,34 +31,15 @@ const SignupScreen = () => {
       createTwoButtonAlert('Wrong Password','The passwords provided are not the same');
     }
     else{
-      console.log('Start Register');
       
       register(username,password,email,age,instagram,twitter).then((response) => {
-        user_token = response.token;
-        console.log('QUE PUTAS PASA');
-        if(response.error){
-          console.log('He dado error');
+        if (response.statusCode === 200) {
+          navigation.goBack();
+          console.log('User: ' + username + ' successfully registered!');
         }
-        else{
-          console.log('Succesful register');
-        }
+        else console.error('Error al registrar:', response.error);
       });
     }
-    //Solo para ir probando
-    console.log('Username:', username);
-    console.log('Email:', email);
-    console.log('Age:', age);
-    console.log('Instagram:', instagram);
-    console.log('Twitter:', twitter);
-    console.log('Password:', password);
-    console.log('Password2:', conf_passwd);
-
-    
-
-    
-
-
-    // Por ejemplo, puedes enviar estos datos a un backend
   };
 
   return (
@@ -69,30 +51,35 @@ const SignupScreen = () => {
           placeholder="Email"
           onChangeText={(text) => setEmail(text)}
           value={email}
+          autoCapitalize='none'
         />
         <TextInput
           style={styles.input}
           placeholder="Username"
           onChangeText={(text) => setUsername(text)}
           value={username}
+          autoCapitalize='none'
         />
         <TextInput
           style={styles.input}
           placeholder="Age"
           onChangeText={(text) => setAge(text)}
           value={age}
+          autoCapitalize='none'
         />
         <TextInput
           style={styles.input}
           placeholder="Instagram"
           onChangeText={(text) => setInstagram(text)}
           value={instagram}
+          autoCapitalize='none'
         />
         <TextInput
           style={styles.input}
           placeholder="Twitter"
           onChangeText={(text) => setTwitter(text)}
           value={twitter}
+          autoCapitalize='none'
         />
         <TextInput
           style={styles.input}
@@ -100,6 +87,7 @@ const SignupScreen = () => {
           onChangeText={(text) => setPassword(text)}
           value={password}
           secureTextEntry
+          autoCapitalize='none'
         />
         <TextInput
           style={styles.input}
@@ -107,6 +95,7 @@ const SignupScreen = () => {
           onChangeText={(text) => setConfPassword(text)}
           value={conf_passwd}
           secureTextEntry
+          autoCapitalize='none'
         />
         <TouchableOpacity style={styles.button} onPress={handleSignUp}>
           <Text style={styles.buttonText}>Sign Up</Text>

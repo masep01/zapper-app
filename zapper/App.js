@@ -4,6 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TabNavigation from './App/Navigation/TabNavigation';
 import LoginScreen from './App/Screens/LogInScreen';
+import Home from './App/Screens/Home';
+import Profile from './App/Screens/Profile';
 
 import * as Location from 'expo-location';
 import { UserLocationContext } from './App/Context/UserLocationContext';
@@ -15,6 +17,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [isLoggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -39,13 +42,22 @@ export default function App() {
   }
   return (
     <View style={styles.container}>
-        <NavigationContainer>
+      <NavigationContainer>
+        {isLoggedIn ? (
+          <TabNavigation>
+            {/*{props => <Home {...props} location={location}/>}*/}
+          </TabNavigation>
+        ) : (
           <Stack.Navigator initialRouteName = "LogIn">
-            <Stack.Screen name = "LogIn" component = {LoginScreen}/>
+            <Stack.Screen name = "LogIn">
+              {props => <LoginScreen {...props} setLoggedIn={setLoggedIn} />}
+            </Stack.Screen>
             <Stack.Screen name = "SignUp" component = {SignupScreen}/>
-            <Stack.Screen name = "TabNav" component = {TabNavigation}/>
           </Stack.Navigator>
-        </NavigationContainer>  
+        )
+
+        }
+      </NavigationContainer>
     </View>
   );
 }

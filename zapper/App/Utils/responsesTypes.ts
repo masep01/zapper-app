@@ -9,6 +9,18 @@ export interface LoginOrRegisterResponse {
     readonly error: boolean
 }
 
+export interface LocationResponse {
+    "coords": {
+        "accuracy": number
+        "altitude": number
+        "altitudeAccuracy": number
+        "heading": number
+        "latitude": number
+        "longitude": number
+        "speed": number}
+    "mocked": boolean, "timestamp": number
+}
+
 export interface RegisterBody {
     username: string;
     email: string;

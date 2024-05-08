@@ -3,20 +3,10 @@ import { StyleSheet, View } from 'react-native';
 import GoogleMapsView from '../Components/Home/GoogleMapsView';
 import { UserLocationContext } from '../Context/UserLocationContext'
 import {getUserInformation} from "../Utils/axios";
+import * as Location from "expo-location";
 
 export default function Home() {
-  const [placeList,setPlaceList]=useState([]);
-  const {location,setLocation}=useContext(UserLocationContext);
-  useEffect(()=>{
-    if(location)
-    {
-      GetNearBySearchPlace('restaurant');
-    }
-  },[location])
-
-  const GetNearBySearchPlace=(value)=>{
-    getUserInformation()
-  }
+  const [userList, setUserList] = useState([]);
   return (
     <GoogleMapsView/>
   );

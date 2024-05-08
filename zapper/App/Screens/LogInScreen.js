@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 import {login} from "../Utils/axios";
+import * as SecureStore from "expo-secure-store";
 
 const LoginScreen = ({ navigation, setLoggedIn }) => {
   const [username, setUsername] = useState('');
@@ -14,9 +15,13 @@ const LoginScreen = ({ navigation, setLoggedIn }) => {
     try {
       const response = await login(username, password);
       console.log(response.statusCode);
-
+      if (Platform.OS === 'web') {
+        localStorage.setItem('userToken', response.token || '');
+      } else {
+        SecureStore.setItemAsync('userToken', response.token || '');
+      }
       if (response.statusCode === 200) navigation.navigate('Home');
-      else console.error('Error al iniciar sesión:', response.error);
+      else console.error('Error al conectar con BD', response.error);
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
     }

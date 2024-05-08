@@ -1,20 +1,20 @@
 import {View, Text, TextInput, Platform, StyleSheet} from 'react-native'
 import { Button, TextInput as Input } from 'react-native-paper'
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import React from 'react'
 import color from "color";
 import {getUserInformation, updateUserInformation} from "../Utils/axios";
-import {getToken} from "../Utils/utils";
+import {getUsername} from "../Utils/utils";
 
 
-const token = getToken();
-let username = '';
+let username = 'Adri';
+//getUsername().then((response) => { username = response; });
 let email = '';
 let instagram = '';
 let twitter = '';
 let loadingScreen = false;
 
-getUserInformation(token).then((response) => {
+getUserInformation(username).then((response) => {
     username = response.information.username;
     email = response.information?.user_mail || '';
     instagram = response.information?.instagram || '';
@@ -23,6 +23,9 @@ getUserInformation(token).then((response) => {
 });
 
 export default function Profile({ navigation }) {
+    useEffect(() => {
+        getUsername().then((response) => { username = response; });
+    }, []);
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState(email);
     const [instagram, setInsta] = useState(instagram);

@@ -7,11 +7,11 @@ import {
     RegisterBody,
     MyInformationResponse,
     UsersList,
-    BasicResponse,
+    BasicResponse, LocationResponse,
 } from './responsesTypes';
 
-const baseURL = 'http://zubat.fib.upc.edu:32334/api';
-
+//const baseURL = 'http://zubat.fib.upc.edu:32334/api';
+const baseURL = 'http://localhost:8080/api'
 export async function login(userName: string, password: string): Promise<LoginOrRegisterResponse> {
     const data: LoginBody = {
         username: userName,
@@ -91,11 +91,11 @@ export async function updateUserInformation(
     email: string,
     instagram: string,
     twitter: string,
-): Promise<MyInformationResponse> {
+): Promise<BasicResponse> {
     try {
         const response = await axios({
             method: 'put',
-            url: `${baseURL}/users`,
+            url: `${baseURL}/updateUserInfo`,
             headers: { username },
             data: {
                 email,
@@ -103,7 +103,26 @@ export async function updateUserInformation(
                 twitter,
             },
         });
-        return { information: { ...response.data.user }, error: false };
+        return { error: false };
+    } catch (error) {
+        return { error: true };
+    }
+}
+
+export async function updateLocation(
+    username: string,
+    location: LocationResponse,
+): Promise<BasicResponse>{
+    try {
+        const response = await axios({
+            method: 'put',
+            url: `${baseURL}/updateLocation`,
+            headers: { username },
+            data: {
+                location,
+            },
+        });
+        return { error: false };
     } catch (error) {
         return { error: true };
     }

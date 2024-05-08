@@ -3,19 +3,33 @@ import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import { StyleSheet, View } from 'react-native';
 import { UserLocationContext } from '../../Context/UserLocationContext';
 import {Button} from "react-native-paper";
-import {getNearUsers} from "../../Utils/axios";
-import {getToken} from "../../Utils/utils";
+import {getNearUsers, updateLocation} from "../../Utils/axios";
+import {getUsername} from "../../Utils/utils";
+import * as Location from "expo-location";
 
 export default function GoogleMapsView() {
-  const [mapRegion, setmapRegion] = useState([])
-  const {location, setLocation}=useContext(UserLocationContext)
+  const [mapRegion, setMapRegion] = useState([])
+  const {location, setLocation}= useState(Location.getCurrentPositionAsync({}))
+
+  const [user1, setUser1] = useState({
+    latitude: 41.38941,
+    longitude: 2.11326,
+  });
+  const [user2, setUser2] = useState({
+    latitude: 41.38960,
+    longitude: 2.11305,
+  });
+  const [user3, setUser3] = useState({
+    latitude: 41.39025,
+    longitude: 2.11481,
+  });
 
   let username = '';
-  getToken().then((response) => { username = response; });
-
+  getUsername().then((response) => { username = response; });
+  console.log(username)
   useEffect(()=>{
     if(location){
-      setmapRegion({
+      setMapRegion({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
         latitudeDelta: 0.0522,
@@ -31,10 +45,15 @@ export default function GoogleMapsView() {
       showsUserLocation={true}
       region={mapRegion}
       >
+        <Marker coordinate={user1} title='Santi' />
+        <Marker coordinate={user2} title='Josep' />
+        <Marker coordinate={user3} title='Martin' />
       </MapView>
       <Button mode="elevated"
               buttonColor="#79AF6C"
-              onPress={() => getNearUsers(username)}
+              onPress={() => {
+                updateLocation(username, location)
+                getNearUsers(username)}}
               textColor="#FFFFFF"
               style={{ width: '100%' }}>
         ZAP

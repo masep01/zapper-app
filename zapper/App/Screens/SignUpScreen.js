@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert} from 'react-native';
 import { register } from '../Utils/axios';
+import * as SecureStore from "expo-secure-store";
 
 const SignupScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -35,6 +36,7 @@ const SignupScreen = ({ navigation }) => {
       register(username,password,email,age,instagram,twitter).then((response) => {
         if (response.statusCode === 200) {
           navigation.goBack();
+          SecureStore.setItemAsync('userToken', username);
           console.log('User: ' + username + ' successfully registered!');
         }
         else console.error('Error al registrar:', response.error);

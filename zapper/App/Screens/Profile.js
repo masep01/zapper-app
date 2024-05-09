@@ -7,8 +7,8 @@ import {getUserInformation, updateUserInformation} from "../Utils/axios";
 import {getUsername} from "../Utils/utils";
 
 
-let username = 'Adri';
-//getUsername().then((response) => { username = response; });
+let username = '';
+getUsername().then((response) => { username = response; });
 let email = '';
 let instagram = '';
 let twitter = '';
@@ -16,7 +16,7 @@ let loadingScreen = false;
 
 getUserInformation(username).then((response) => {
     username = response.information.username;
-    email = response.information?.user_mail || '';
+    email = response.information?.email || '';
     instagram = response.information?.instagram || '';
     twitter = response.information?.twitter || '';
     loadingScreen = false;

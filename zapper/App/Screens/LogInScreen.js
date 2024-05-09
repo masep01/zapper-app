@@ -16,11 +16,14 @@ const LoginScreen = ({ navigation, setLoggedIn }) => {
       const response = await login(username, password);
       console.log(response.statusCode);
       if (Platform.OS === 'web') {
-        localStorage.setItem('userToken', response.token || '');
+        localStorage.setItem('userToken', response.username || '');
       } else {
-        SecureStore.setItemAsync('userToken', response.token || '');
+        await SecureStore.setItemAsync('userToken', response.username || '');
       }
-      if (response.statusCode === 200) navigation.navigate('Home');
+      if (response.statusCode === 200){
+        navigation.navigate('Home');
+        console.log('Welcome', response.username);
+      }
       else console.error('Error al conectar con BD', response.error);
     } catch (error) {
       console.error('Error al iniciar sesión:', error);

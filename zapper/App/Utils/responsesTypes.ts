@@ -26,6 +26,8 @@ export interface RegisterBody {
     email: string;
     password: string;
     age: string;
+    instagram?: string;
+    twitter?: string;
 }
 
 export interface MyInformationResponse {
@@ -44,7 +46,7 @@ export interface UsersList {
 
 export interface MyInformation {
     readonly username: string;
-    readonly user_mail: string;
+    readonly email: string;
     readonly age: string;
     readonly instagram?: string | null;
     readonly twitter?: string | null;

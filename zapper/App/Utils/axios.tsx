@@ -10,8 +10,8 @@ import {
     BasicResponse, LocationResponse,
 } from './responsesTypes';
 
-//const baseURL = 'http://zubat.fib.upc.edu:32334/api';
-const baseURL = 'http://localhost:8080/api'
+const baseURL = 'http://zubat.fib.upc.edu:32334/api';
+//const baseURL = 'http://localhost:8080/api'
 export async function login(userName: string, password: string): Promise<LoginOrRegisterResponse> {
     const data: LoginBody = {
         username: userName,
@@ -37,6 +37,8 @@ export async function register(
     password: string,
     email: string,
     age: string,
+    instagram?: string,
+    twitter?: string,
 ):
     Promise<LoginOrRegisterResponse> {
     const data: RegisterBody = {
@@ -44,6 +46,8 @@ export async function register(
         password,
         email,
         age,
+        instagram,
+        twitter,
     };
 
     try {
@@ -52,7 +56,7 @@ export async function register(
             url: `${baseURL}/register`,
             data,
         });
-        return { username: response.data.user_name, statusCode: response.status, error: false };
+        return { username: response.data.username, statusCode: response.status, error: false };
     } catch (error) {
         if (error.response) return { error: true, statusCode: error.response.status };
         else return { error: true };
@@ -80,7 +84,7 @@ export async function getNearUsers(username: string): Promise<UsersList> {
             headers: { username },
         });
 
-        return { list: [...response.data.user_name], error: false };
+        return { list: [...response.data.username], error: false };
     } catch (error) {
         return { error: true };
     }

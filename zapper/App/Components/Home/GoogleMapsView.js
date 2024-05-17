@@ -6,6 +6,30 @@ import {Button} from "react-native-paper";
 import {getNearUsers, updateLocation} from "../../Utils/axios";
 import {getUsername} from "../../Utils/utils";
 import * as Location from "expo-location";
+import UserItem from "./UserItem";
+
+export const coordinates = [
+  {
+    name: "Santi",
+    location: {
+      latitude: 41.38941,
+      longitude: 2.11326,
+    },
+    age: 21,
+    insta: "santioliver9",
+    twitter: " ",
+  },
+  {
+    name: "Josep",
+    location: {
+      latitude: 41.38941,
+      longitude: 2.11326,
+    },
+    age: 21,
+    insta: "josep",
+    twitter: " ",
+  },
+]
 
 export default function GoogleMapsView() {
   const [mapRegion, setMapRegion] = useState([])
@@ -45,9 +69,11 @@ export default function GoogleMapsView() {
       showsUserLocation={true}
       region={mapRegion}
       >
-        <Marker coordinate={user1} title='Santi' />
-        <Marker coordinate={user2} title='Josep' />
-        <Marker coordinate={user3} title='Martin' />
+        {coordinates.map((coord) => {
+          return (
+              <Marker coordinate={coord.location} title={coord.name} />
+          );
+        })}
       </MapView>
       <Button mode="elevated"
               buttonColor="#79AF6C"

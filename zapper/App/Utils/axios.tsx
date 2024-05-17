@@ -1,6 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import axios from 'axios';
-import sha256 from 'sha256';
 import {
     LoginBody,
     LoginOrRegisterResponse,
@@ -10,7 +9,7 @@ import {
     BasicResponse, LocationResponse,
 } from './responsesTypes';
 
-const baseURL = 'http://zubat.fib.upc.edu:32334/api';
+const baseURL = 'https://gloom.fib.upc.edu/api';
 //const baseURL = 'http://localhost:8080/api'
 export async function login(userName: string, password: string): Promise<LoginOrRegisterResponse> {
     const data: LoginBody = {

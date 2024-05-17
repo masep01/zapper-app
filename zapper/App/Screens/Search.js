@@ -1,11 +1,11 @@
-import { View, Text } from 'react-native'
+import {ScrollView} from 'react-native'
 import React from 'react'
 import UserList from '../Components/Home/UserList'
 
 export default function Search() {
   return (
-    <View>
+    <ScrollView>
       <UserList/>
-    </View>
+    </ScrollView>
   )
 }

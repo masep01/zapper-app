@@ -10,7 +10,7 @@ import {
     BasicResponse,
 } from './responsesTypes';
 
-const baseURL = 'http://zubat.fib.upc.edu:32334/api';
+const baseURL = 'https://gloom.fib.upc.edu/api';
 
 export async function login(userName: string, password: string): Promise<LoginOrRegisterResponse> {
     const data: LoginBody = {

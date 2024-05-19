@@ -127,9 +127,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     padding: 10,
   },
-  datePicker: {
-    
-  },
   button: {
     backgroundColor: 'blue',
     padding: 10,

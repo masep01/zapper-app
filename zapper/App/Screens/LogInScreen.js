@@ -1,24 +1,43 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import {login} from "../Utils/axios";
 
 const LoginScreen = ({ navigation, setLoggedIn }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const createTwoButtonAlert = (title,msg) =>
+    Alert.alert(title, msg, [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+  
+      { 
+        text: 'OK', 
+      }
+    ]);
+
   const handleLogIn = async () => {
     console.log('Username:', username);
     console.log('Password:', password);
 
-    setLoggedIn(true);
-    try {
-      const response = await login(username, password);
-      console.log(response.statusCode);
+    if(username == '' || password == ''){
+      createTwoButtonAlert('Invalid Input','Neither the username nor the password can be blank');
+    }
+    else{
+      try {
+        const response = await login(username, password);
+        console.log(response.statusCode);
 
-      if (response.statusCode === 200) navigation.navigate('Home');
-      else console.error('Error al iniciar sesión:', response.error);
-    } catch (error) {
-      console.error('Error al iniciar sesión:', error);
+        if (response.statusCode === 200){
+          setLoggedIn(true);
+          navigation.navigate('Home');
+        }
+        else console.error('Error al iniciar sesión:', response.error);
+      } catch (error) {
+        console.error('Error al iniciar sesión:', error);
+      }
     }
   };
 

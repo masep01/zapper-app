@@ -1,87 +1,88 @@
-import React, { useContext, useEffect, useState } from 'react';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import React, { useEffect, useState, useContext } from 'react';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { StyleSheet, View } from 'react-native';
-import { UserLocationContext } from '../../Context/UserLocationContext';
-import {Button} from "react-native-paper";
-import {getNearUsers, updateLocation} from "../../Utils/axios";
-import {getUsername} from "../../Utils/utils";
-import * as Location from "expo-location";
-import UserItem from "./UserItem";
-
-export const coordinates = [
-  {
-    name: "Santi",
-    location: {
-      latitude: 41.38941,
-      longitude: 2.11326,
-    },
-    age: 21,
-    insta: "santioliver9",
-    twitter: " ",
-  },
-  {
-    name: "Josep",
-    location: {
-      latitude: 41.38941,
-      longitude: 2.11326,
-    },
-    age: 21,
-    insta: "josep",
-    twitter: " ",
-  },
-]
+import { Button } from 'react-native-paper';
+import { getNearUsers, updateLocation } from '../../Utils/axios';
+import { getUsername } from '../../Utils/utils';
+import * as Location from 'expo-location';
+import { CoordinatesContext } from '../../Context/CoordinatesContext';
 
 export default function GoogleMapsView() {
-  const [mapRegion, setMapRegion] = useState([])
-  const {location, setLocation}= useState(Location.getCurrentPositionAsync({}))
+  const [mapRegion, setMapRegion] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [username, setUsername] = useState('');
+  const { coordinates, setCoordinates } = useContext(CoordinatesContext);
 
-  const [user1, setUser1] = useState({
-    latitude: 41.38941,
-    longitude: 2.11326,
-  });
-  const [user2, setUser2] = useState({
-    latitude: 41.38960,
-    longitude: 2.11305,
-  });
-  const [user3, setUser3] = useState({
-    latitude: 41.39025,
-    longitude: 2.11481,
-  });
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        const response = await getUsername();
+        setUsername(response);
+      } catch (error) {
+        console.error('Error fetching username:', error);
+      }
+    };
 
-  let username = '';
-  getUsername().then((response) => { username = response; });
-  console.log(username)
-  useEffect(()=>{
-    if(location){
+    fetchUsername();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          console.error('Permission to access location was denied');
+          return;
+        }
+
+        const currentLocation = await Location.getCurrentPositionAsync({});
+        setLocation(currentLocation);
+      } catch (error) {
+        console.error('Error fetching location:', error);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (location) {
       setMapRegion({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
         latitudeDelta: 0.0522,
         longitudeDelta: 0.0421,
-      })
+      });
     }
-  },[location])
+  }, [location]);
+
+  const handleZap = async () => {
+    if (username && location) {
+      await updateLocation(username, location);
+      const result = await getNearUsers(username);
+      if (!result.error) {
+        setCoordinates(result.list);  // Actualiza el estado con los nuevos datos
+      }
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <MapView style={styles.map}
-      provider={PROVIDER_GOOGLE}
-      showsUserLocation={true}
-      region={mapRegion}
+      <MapView
+        style={styles.map}
+        provider={PROVIDER_GOOGLE}
+        showsUserLocation={true}
+        region={mapRegion}
       >
-        {coordinates.map((coord) => {
-          return (
-              <Marker coordinate={coord.location} title={coord.name} />
-          );
-        })}
+        {coordinates.map((coord) => (
+          <Marker key={coord.name} coordinate={coord.location} title={coord.name} />
+        ))}
       </MapView>
-      <Button mode="elevated"
-              buttonColor="#79AF6C"
-              onPress={() => {
-                updateLocation(username, location)
-                getNearUsers(username)}}
-              textColor="#FFFFFF"
-              style={{ width: '100%' }}>
+      <Button
+        mode="elevated"
+        buttonColor="#79AF6C"
+        onPress={handleZap}
+        textColor="#FFFFFF"
+        style={{ width: '100%' }}
+      >
         ZAP
       </Button>
     </View>

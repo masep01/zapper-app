@@ -6,5 +6,6 @@ export async function getUsername(): Promise<string> {
         return localStorage.getItem('userToken') || '';
     }
     const token = await SecureStore.getItemAsync('userToken');
+    console.log("ME HAN PEDIDO EL USERNAME, VALE: " + token)
     return token || '';
 }

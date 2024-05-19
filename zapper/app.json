@@ -29,10 +29,14 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff",
-        "package": "com.zapper.pti",
-        
+        "package": "com.zapper.pti"
       },
-      "package": "com.zapper.pti"
+      "package": "com.zapper.pti", 
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyD2BPWjmF2OT6nSF6NETB4HHuWOJk1t8Sg"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -5,12 +5,34 @@ import {
     LoginOrRegisterResponse,
     RegisterBody,
     MyInformationResponse,
-    UsersList,
-    BasicResponse, LocationResponse,
+    BasicResponse,
+    LocationResponse,
 } from './responsesTypes';
 
-const baseURL = 'https://gloom.fib.upc.edu/api';
-//const baseURL = 'http://localhost:8080/api'
+type UserProfile = {
+    instagram: string;
+    twitter: string;
+}
+  
+type NearUser = {
+    location: {
+        type: string;
+        coordinates: [number, number];
+    };
+    profiles: UserProfile;
+    username: string;
+    age: number;
+}
+
+type UsersList = {
+    list?: NearUser[];
+    error: boolean;
+};
+  
+
+//const baseURL = 'https://gloom.fib.upc.edu/api';
+const baseURL = 'http://192.168.5.130:8080/api'
+
 export async function login(userName: string, password: string): Promise<LoginOrRegisterResponse> {
     const data: LoginBody = {
         username: userName,
@@ -23,7 +45,7 @@ export async function login(userName: string, password: string): Promise<LoginOr
             url: `${baseURL}/login`,
             data: data,
         });
-        return { username: response.data.username, statusCode: response.status, error: false};
+        return { username: userName, statusCode: response.status, error: false};
     } catch (error) {
         if (error.response) return { error: true, statusCode: error.response.status };
         else return { error: true };
@@ -65,9 +87,9 @@ export async function register(
 export async function getUserInformation(username: string): Promise<MyInformationResponse> {
     try {
         const response = await axios({
-            method: 'get',
+            method: 'post',
             url: `${baseURL}/getUserInfo`,
-            headers: { username },
+            data: { username },
         });
         return { information: { ...response.data.user}, error: false };
     } catch (error) {
@@ -78,12 +100,23 @@ export async function getUserInformation(username: string): Promise<MyInformatio
 export async function getNearUsers(username: string): Promise<UsersList> {
     try {
         const response = await axios({
-            method: 'get',
+            method: 'post',
             url: `${baseURL}/getNearUsers`,
-            headers: { username },
+            data:  {
+                username
+            },
         });
-
-        return { list: [...response.data.username], error: false };
+        const transformedList = response.data.nearUsers.map((user: NearUser) => ({
+            name: user.username,
+            location: {
+                latitude: user.location.coordinates[1],
+                longitude: user.location.coordinates[0]
+            },
+            age: user.age,
+            insta: user.profiles.instagram || " ",
+            twitter: user.profiles.twitter || " "
+        }));
+        return { list: transformedList, error: false };
     } catch (error) {
         return { error: true };
     }
@@ -97,7 +130,7 @@ export async function updateUserInformation(
 ): Promise<BasicResponse> {
     try {
         const response = await axios({
-            method: 'put',
+            method: 'post',
             url: `${baseURL}/updateUserInfo`,
             headers: { username },
             data: {
@@ -117,12 +150,16 @@ export async function updateLocation(
     location: LocationResponse,
 ): Promise<BasicResponse>{
     try {
+        console.log(location)
+        const { longitude, latitude } = location.coords;
+        console.log(longitude + " " + latitude)
         const response = await axios({
-            method: 'put',
+            method: 'post',
             url: `${baseURL}/updateLocation`,
-            headers: { username },
             data: {
-                location,
+                username, 
+                longitude,
+                latitude,
             },
         });
         return { error: false };

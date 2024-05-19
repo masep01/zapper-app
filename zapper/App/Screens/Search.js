@@ -1,11 +1,14 @@
-import {ScrollView} from 'react-native'
-import React from 'react'
-import UserList from '../Components/Home/UserList'
+import React, { useContext } from 'react';
+import { ScrollView } from 'react-native';
+import UserList from '../Components/Home/UserList';
+import { CoordinatesContext } from '../Context/CoordinatesContext';
 
 export default function Search() {
+  const { coordinates } = useContext(CoordinatesContext);
+
   return (
     <ScrollView>
-      <UserList/>
+      <UserList coordinates={coordinates} />
     </ScrollView>
-  )
+  );
 }

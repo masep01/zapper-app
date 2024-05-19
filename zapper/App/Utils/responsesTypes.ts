@@ -17,7 +17,8 @@ export interface LocationResponse {
         "heading": number
         "latitude": number
         "longitude": number
-        "speed": number}
+        "speed": number
+    }
     "mocked": boolean, "timestamp": number
 }
 
@@ -29,6 +30,7 @@ export interface RegisterBody {
     instagram?: string;
     twitter?: string;
 }
+
 
 export interface MyInformationResponse {
     readonly information?: MyInformation;

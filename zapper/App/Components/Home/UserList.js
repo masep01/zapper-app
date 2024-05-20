@@ -6,9 +6,9 @@ export default function UserList({ coordinates }) {
   return (
     <View>
       <Text style={{ fontSize: 20, marginTop: 50, marginLeft: 20 }}>
-        There are {coordinates && Array.isArray(coordinates) ? coordinates.length : 0} people near you
+        There are {coordinates.length} people near you
       </Text>
-      {coordinates && Array.isArray(coordinates) && coordinates.map((person) => {
+      {coordinates.map((person) => {
         return (
           <UserItem
             key={person.name}

@@ -14,17 +14,17 @@ let instagram = '';
 let twitter = '';
 let loadingScreen = false;
 
-getUserInformation(username).then((response) => {
-    username = response.information.username;
-    email = response.information?.email || '';
-    instagram = response.information?.instagram || '';
-    twitter = response.information?.twitter || '';
-    loadingScreen = false;
-});
-
-export default function Profile({ navigation }) {
+export default function Profile() {
+  
     useEffect(() => {
         getUsername().then((response) => { username = response; });
+        getUserInformation(username).then((response) => {
+            username = response.information.username;
+            email = response.information?.email || '';
+            instagram = response.information?.instagram || '';
+            twitter = response.information?.twitter || '';
+            loadingScreen = false;
+        });
     }, []);
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState(email);

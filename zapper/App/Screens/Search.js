@@ -6,6 +6,10 @@ import { CoordinatesContext } from '../Context/CoordinatesContext';
 export default function Search() {
   const { coordinates } = useContext(CoordinatesContext);
 
+  if (!coordinates) {
+    return <Text>An error has occurred...</Text>; 
+  }
+
   return (
     <ScrollView>
       <UserList coordinates={coordinates} />

@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import axios from 'axios';
 import {
     LoginBody,
@@ -7,6 +6,7 @@ import {
     MyInformationResponse,
     BasicResponse,
     LocationResponse,
+    MyInformation,
 } from './responsesTypes';
 
 type UserProfile = {
@@ -91,7 +91,16 @@ export async function getUserInformation(username: string): Promise<MyInformatio
             url: `${baseURL}/getUserInfo`,
             data: { username },
         });
-        return { information: { ...response.data.user}, error: false };
+        const userInfo = response.data.userInfo;
+        const information: MyInformation = {
+            username: userInfo.username,
+            age: userInfo.age.toString(), 
+            email: userInfo.email, 
+            instagram: userInfo.profiles?.instagram || null,
+            twitter: userInfo.profiles?.twitter || null
+        };
+
+        return { information, error: false };
     } catch (error) {
         return { error: true };
     }

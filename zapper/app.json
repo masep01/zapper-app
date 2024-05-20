@@ -17,7 +17,8 @@
         {
           "locationAlwaysAndWhenInUsePermission": "Allow Zapper to use your location."
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "assetBundlePatterns": [
       "**/*"
@@ -31,7 +32,7 @@
         "backgroundColor": "#ffffff",
         "package": "com.zapper.pti"
       },
-      "package": "com.zapper.pti", 
+      "package": "com.zapper.pti",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyD2BPWjmF2OT6nSF6NETB4HHuWOJk1t8Sg"

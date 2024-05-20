@@ -31,7 +31,7 @@ type UsersList = {
   
 
 //const baseURL = 'https://gloom.fib.upc.edu/api';
-const baseURL = 'http://192.168.5.130:8080/api'
+const baseURL = 'http://192.168.1.69:8080/api'
 
 export async function login(userName: string, password: string): Promise<LoginOrRegisterResponse> {
     const data: LoginBody = {

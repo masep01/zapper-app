@@ -25,19 +25,21 @@ const SignupScreen = ({ navigation }) => {
     }
   ]);
 
-
-
   const handleSignUp = () => {
     if(password != conf_passwd){
       createTwoButtonAlert('Wrong Password','The passwords provided are not the same');
+
+    } else if (!Number.isInteger(Number(age)) || age === '') {
+      createTwoButtonAlert('Invalid Age', 'Please enter a valid integer age.');
+      return;
     }
     else{
       
       register(username,password,email,age,instagram,twitter).then((response) => {
         if (response.statusCode === 200) {
           navigation.goBack();
-          SecureStore.setItemAsync('userToken', username);
           console.log('User: ' + username + ' successfully registered!');
+          alert(username+" successfully registered!")
         }
         else console.error('Error al registrar:', response.error);
       });

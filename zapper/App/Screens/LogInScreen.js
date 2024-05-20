@@ -1,32 +1,36 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform} from 'react-native';
 import {login} from "../Utils/axios";
-import * as SecureStore from "expo-secure-store";
+import { UserContext } from '../Context/UserContext';
 
-const LoginScreen = ({ navigation, setLoggedIn }) => {
-  const [username, setUsername] = useState('');
+const LoginScreen = ({ navigation, setLoggedIn}) => {
+  const { username, setUsername } = useContext(UserContext);
   const [password, setPassword] = useState('');
 
   const handleLogIn = async () => {
     console.log('Username:', username);
     console.log('Password:', password);
-
-    setLoggedIn(true);
+    
     try {
       const response = await login(username, password);
-      console.log(response.statusCode);
-      if (Platform.OS === 'web') {
-        localStorage.setItem('userToken', response.username || '');
-      } else {
-        await SecureStore.setItemAsync('userToken', response.username || '');
-      }
+      
       if (response.statusCode === 200){
         navigation.navigate('Home');
         console.log('Welcome', response.username);
+        setUsername(response.username);
+        setLoggedIn(true);
       }
-      else console.error('Error al conectar con BD', response.error);
+      else {
+        console.error('Error al iniciar sesión:', response.error);
+        alert('Wrong username or password');
+        setLoggedIn(false);
+        
+      }
+  
     } catch (error) {
-      console.error('Error al iniciar sesión:', error);
+      console.error('Error al conectar con BD', error);
+      alert('Error trying to connect to server.');
+      setLoggedIn(false);
     }
   };
 

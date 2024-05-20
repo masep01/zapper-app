@@ -4,12 +4,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TabNavigation from './App/Navigation/TabNavigation';
 import LoginScreen from './App/Screens/LogInScreen';
-
-
 import * as Location from 'expo-location';
-import { UserLocationContext } from './App/Context/CoordinatesContext';
+import { UserProvider } from './App/Context/UserContext';
 import SignupScreen from './App/Screens/SignUpScreen';
-
+import HomeScreen from './App/Screens/Home';
 
 const Stack = createNativeStackNavigator();
 
@@ -40,24 +38,25 @@ export default function App() {
     text = JSON.stringify(location);
   }
   return (
-    <View style={styles.container}>
-      <NavigationContainer>
-        {isLoggedIn ? (
-          <TabNavigation>
-            {/*{props => <Home {...props} location={location}/>}*/}
-          </TabNavigation>
-        ) : (
-          <Stack.Navigator initialRouteName = "LogIn">
+    <UserProvider>
+      <View style={styles.container}>
+        <NavigationContainer>
+          {isLoggedIn ? (
+            <TabNavigation>
+              {/*{props => <Home {...props} location={location}/>}*/}
+            </TabNavigation>
+          ) : (
+            <Stack.Navigator initialRouteName = "LogIn">
             <Stack.Screen name = "LogIn">
               {props => <LoginScreen {...props} setLoggedIn={setLoggedIn} />}
             </Stack.Screen>
             <Stack.Screen name = "SignUp" component = {SignupScreen}/>
           </Stack.Navigator>
-        )
-
-        }
-      </NavigationContainer>
-    </View>
+          )
+          }
+        </NavigationContainer>
+      </View>
+    </UserProvider>
   );
 }
 

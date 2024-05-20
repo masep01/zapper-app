@@ -3,28 +3,15 @@ import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-paper';
 import { getNearUsers, updateLocation } from '../../Utils/axios';
-import { getUsername } from '../../Utils/utils';
 import * as Location from 'expo-location';
 import { CoordinatesContext } from '../../Context/CoordinatesContext';
+import { UserContext } from '../../Context/UserContext';
 
 export default function GoogleMapsView() {
   const [mapRegion, setMapRegion] = useState(null);
   const [location, setLocation] = useState(null);
-  const [username, setUsername] = useState('');
+  const { username } = useContext(UserContext);
   const { coordinates, setCoordinates } = useContext(CoordinatesContext);
-
-  useEffect(() => {
-    const fetchUsername = async () => {
-      try {
-        const response = await getUsername();
-        setUsername(response);
-      } catch (error) {
-        console.error('Error fetching username:', error);
-      }
-    };
-
-    fetchUsername();
-  }, []);
 
   useEffect(() => {
     (async () => {

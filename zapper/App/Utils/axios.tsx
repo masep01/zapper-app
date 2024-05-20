@@ -141,8 +141,8 @@ export async function updateUserInformation(
         const response = await axios({
             method: 'post',
             url: `${baseURL}/updateUserInfo`,
-            headers: { username },
             data: {
+                username,
                 email,
                 instagram,
                 twitter,

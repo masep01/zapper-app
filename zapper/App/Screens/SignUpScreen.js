@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   container: {
+    marginTop: 50,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -135,7 +136,8 @@ const styles = StyleSheet.create({
     
   },
   button: {
-    backgroundColor: 'blue',
+    marginTop: 30,
+    backgroundColor: '#79AF6C',
     padding: 10,
     borderRadius: 5,
     width: '80%',
